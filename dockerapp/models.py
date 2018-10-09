@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.urls import reverse
+import os
 
 # Create your models here.
 class Dockerfile(models.Model):
@@ -8,7 +9,7 @@ class Dockerfile(models.Model):
     title = models.CharField(max_length=200)
     image_name = models.CharField(max_length=200)
     dockerfile_content = models.TextField()
-    dockerfile = models.FileField(upload_to='dockerfiles/',blank=True)
+    dockerfile = models.FileField(upload_to='media/dockerfiles/',blank=True)
     created_date = models.DateTimeField(default=timezone.now)
 
     def get_absolute_url(self):
@@ -25,9 +26,16 @@ class Dockerfile(models.Model):
 class Container(models.Model):
     dockerfile = models.ForeignKey('dockerapp.Dockerfile', on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
-    container_id = models.CharField(max_length=250, unique=True)
+    port = models.CharField(max_length=20)
+    container_id = models.CharField(max_length=250)
 
     def get_absolute_url(self):
+        # file = open(self.dockerfile + ".yml", "r")
+
+        # Start the container
+        # os.system("docker login")
+        # os.system("docker build -t " + self.title + " " + str(self.dockerfile) + ".yml")
+        # os.system("docker run -d -p 80:80 " + self.title)
         return reverse("dockerapp:containers")
 
     def __str__(self):

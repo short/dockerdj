@@ -3,7 +3,7 @@
 {% block content %}
     {% for container in container_list %}
         <div class="container">
-            <h1><a href="#">{{ container.title }}</a></h1>
+            <h1><a href="{% url 'dockerapp:container_change' pk=container.pk %}">{{ container.title }}</a></h1>
         </div>
     {% endfor %}
 {% endblock %}

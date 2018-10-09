@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>{{ dockerfile.title }}</h1>
+  <p>Author: {{ dockerfile.author }}</p>
+  <p>Image name: {{ dockerfile.image_name}}</p>
+  <p>File Content: {{ dockerfile.dockerfile_content }}</p>
+  <p>Created at: {{ dockerfile.created_date }}</p>
+  {% if user.is_authenticated %}
+		<a href="{% url 'dockerapp:dockerfile_delete' pk=dockerfile.pk %}" title="delete" class="btn btn-danger">
+			<span class="icon-label">Delete</span>
+		</a>
+	{% endif %}
+{% endblock %}

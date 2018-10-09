@@ -3,7 +3,7 @@
 {% block content %}
     {% for dockerfile in dockerfile_list %}
         <div class="container">
-            <h1><a href="#">{{ dockerfile.title }}</a></h1>
+            <h1><a href="{% url 'dockerapp:dockerfile_change' pk=dockerfile.pk %}">{{ dockerfile.title }}</a></h1>
         </div>
     {% endfor %}
 {% endblock %}
