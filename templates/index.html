@@ -1,4 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
-  <h1>Welcome to the homepage</h1>
+  <div class="form-group"></div>
+  <div class="jumbotron">
+    <h1 class="display-4">Welkom op DockerDJ</h1>
+    <p class="lead">DockerDj is een platform waar docker containers makkelijk gemaakt kunnen worden zonder enige kennis van de docker cli</p>
+    <hr class="my-4">
+    <p>Overigens is het wel handig om wat kennis te hebben van docker en de docker cli om dit platform te gebruiken. Het is wel de bedoeling dat je dockerfiles kan maken</p>
+    <a class="btn btn-primary btn-lg" href="{% url 'dockerapp:container_new' %}" role="button">Container aanmaken</a>
+  </div>
 {% endblock %}
