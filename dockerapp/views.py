@@ -5,7 +5,7 @@ from django.views import generic
 from dockerapp.models import Dockerfile, Container
 from dockerapp.forms import DockerfileForm, ContainerForm
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 import os
 
 from braces.views import SelectRelatedMixin
@@ -44,7 +44,7 @@ class DeleteDockerfile(LoginRequiredMixin, SelectRelatedMixin, generic.DeleteVie
 class ContainerView(generic.ListView):
     model = Container
 
-class CreateContainerView(LoginRequiredMixin, generic.CreateView):
+class CreateContainerView(LoginRequiredMixin, generic.edit.CreateView):
     login_url = 'dockerapp/login/'
     redirect_field_name = 'dockerapp/containers.html'
 
@@ -61,14 +61,36 @@ class DeleteContainer(LoginRequiredMixin, SelectRelatedMixin, generic.DeleteView
     select_related = ("dockerfile",)
     success_url = reverse_lazy("dockerapp:containers")
 
-    # Stop the container
-    # os.system("docker container stop " + model.container_id)
-    # os.system("docker container rm " + model.title)
-
     def get_queryset(self):
+        # Get the object
         queryset = super().get_queryset()
+
+        # get the specifik title and container id
+        container_title = queryset.get().title
+        container_id = queryset.get().container_id
+
+        # stop and remove the container with the title and container id
+        # os.system("docker container stop " + str(model.container_id))
+        # os.system("docker container rm " + str(model.title))
         return queryset
 
     def delete(self, *args, **kwargs):
         messages.success(self.request, "Container Deleted")
         return super().delete(*args, **kwargs)
+
+class StopContainer(LoginRequiredMixin, generic.RedirectView):
+    model = models.Container
+
+    def get_redirect_url(self, *args, **kwargs):
+        return reverse_lazy("dockerapp:containers")
+
+    def get(self, request, *args, **kwargs):
+        # Get the object
+        container = get_object_or_404(Container)
+
+        # get the specifik title and container id
+        container_id = container.container_id
+
+        # stop and remove the container with the title and container id
+        # os.system("docker container stop " + str(model.container_id))
+        return super().get(request, *args, **kwargs)

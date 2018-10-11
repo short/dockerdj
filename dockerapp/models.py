@@ -33,9 +33,11 @@ class Container(models.Model):
         # file = open(self.dockerfile + ".yml", "r")
 
         # Start the container
-        # os.system("docker login")
+        os.system("docker login")
         # os.system("docker build -t " + self.title + " " + str(self.dockerfile) + ".yml")
-        # os.system("docker run -d -p 80:80 " + self.title)
+        os.system("docker run --name " + self.title + " -d -p 80:80 " + self.title)
+        # print('container id is')
+        # print(os.system(str("docker inspect --format="+"{"+"{"+".Id"+"}"+"} " + self.title)))
         return reverse("dockerapp:containers")
 
     def __str__(self):
