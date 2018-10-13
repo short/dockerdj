@@ -88,11 +88,30 @@ class StopContainer(LoginRequiredMixin, generic.RedirectView):
         # Get the object
         container = get_object_or_404(Container)
 
-        # get the specifik title and container id
-        container_id = container.container_id
+        # get the container title
+        container_title = container.title
 
         # stop and remove the container with the title and container id
-        os.system("docker container stop " + str(container_id))
+        os.system("docker container stop " + str(container.container_id))
+
+        try:
+            container = models.Container.objects.filter(
+                title = container_title
+            ).get()
+
+            container.container_stopped = 1
+            container.save()
+        except:
+            messages.warning(
+                self.request,
+                "Container did not stop"
+            )
+        else:
+            messages.success(
+                self.request,
+                "Container stopped"
+            )
+
         return super().get(request, *args, **kwargs)
 
 class UpdateContainerId(LoginRequiredMixin, generic.RedirectView):
@@ -105,18 +124,13 @@ class UpdateContainerId(LoginRequiredMixin, generic.RedirectView):
         # Get the object
         container = get_object_or_404(Container)
 
-        # get the specifik title and container id
+        # get the container title
         container_title = container.title
-        # container_id = container.container_id
 
         try:
             container = models.Container.objects.filter(
                 title = container_title
             ).get()
-
-            # print(container)
-            # print('2')
-            # print("2 " + os.popen(str("docker inspect --format="+"{"+"{"+".Id"+"}"+"} " + container.title)).read())
 
             container.container_id = os.popen(str("docker inspect --format="+"{"+"{"+".Id"+"}"+"} " + container.title)).read()
             container.save()

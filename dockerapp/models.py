@@ -28,13 +28,14 @@ class Container(models.Model):
     title = models.CharField(max_length=200)
     port = models.CharField(max_length=20)
     container_id = models.CharField(max_length=250)
+    container_stopped = models.CharField(max_length=1)
 
     def get_absolute_url(self):
         # file = open(self.dockerfile + ".yml", "r")
 
         # Start the container
         os.system("docker login")
-        # os.system("docker build -t " + self.title + " " + str(self.dockerfile) + ".yml")
+        os.system("docker build -t " + self.title + " " + self.title + ".yml")
         os.system("docker run --name " + self.title + " -d -p 80:80 " + self.title)
         return reverse("dockerapp:containers")
 

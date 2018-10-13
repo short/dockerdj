@@ -1,9 +1,13 @@
 {% extends 'base.html' %}
 
 {% block content %}
+  {% if dockerfile_list|length > 0 %}
     {% for dockerfile in dockerfile_list %}
         <div class="container">
             <h1><a href="{% url 'dockerapp:dockerfile_change' pk=dockerfile.pk %}">{{ dockerfile.title }}</a></h1>
         </div>
     {% endfor %}
+  {% else %}
+    <h2>No dockerfiles</h2>
+  {% endif %}
 {% endblock %}

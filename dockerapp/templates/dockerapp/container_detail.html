@@ -6,9 +6,11 @@
 		<a href="{% url 'dockerapp:container_delete' pk=container.pk %}" title="delete" class="btn btn-danger">
 			Delete
 		</a>
-    <a href="{% url 'dockerapp:container_stop' pk=container.pk %}" title="stop" class="btn btn-warning">
-      Stop Container
-    </a>
+    {% if container.container_stopped == '' %}
+      <a href="{% url 'dockerapp:container_stop' pk=container.pk %}" title="stop" class="btn btn-warning">
+        Stop Container
+      </a>
+    {% endif %}
   {% else %}
     <a href="{% url 'dockerapp:container_update' pk=container.pk %}" title="delete" class="btn btn-danger">
       update container_id
