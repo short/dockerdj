@@ -44,7 +44,7 @@ class DeleteDockerfile(LoginRequiredMixin, SelectRelatedMixin, generic.DeleteVie
 class ContainerView(generic.ListView):
     model = Container
 
-class CreateContainerView(LoginRequiredMixin, generic.edit.CreateView):
+class CreateContainerView(LoginRequiredMixin, generic.CreateView):
     login_url = 'dockerapp/login/'
     redirect_field_name = 'dockerapp/containers.html'
 
@@ -70,8 +70,8 @@ class DeleteContainer(LoginRequiredMixin, SelectRelatedMixin, generic.DeleteView
         container_id = queryset.get().container_id
 
         # stop and remove the container with the title and container id
-        # os.system("docker container stop " + str(model.container_id))
-        # os.system("docker container rm " + str(model.title))
+        os.system("docker container stop " + str(container_id))
+        os.system("docker container rm " + str(container_title))
         return queryset
 
     def delete(self, *args, **kwargs):
@@ -92,5 +92,42 @@ class StopContainer(LoginRequiredMixin, generic.RedirectView):
         container_id = container.container_id
 
         # stop and remove the container with the title and container id
-        # os.system("docker container stop " + str(model.container_id))
+        os.system("docker container stop " + str(container_id))
+        return super().get(request, *args, **kwargs)
+
+class UpdateContainerId(LoginRequiredMixin, generic.RedirectView):
+    model = models.Container
+
+    def get_redirect_url(self, *args, **kwargs):
+        return reverse_lazy("dockerapp:containers")
+
+    def get(self, request, *args, **kwargs):
+        # Get the object
+        container = get_object_or_404(Container)
+
+        # get the specifik title and container id
+        container_title = container.title
+        # container_id = container.container_id
+
+        try:
+            container = models.Container.objects.filter(
+                title = container_title
+            ).get()
+
+            # print(container)
+            # print('2')
+            # print("2 " + os.popen(str("docker inspect --format="+"{"+"{"+".Id"+"}"+"} " + container.title)).read())
+
+            container.container_id = os.popen(str("docker inspect --format="+"{"+"{"+".Id"+"}"+"} " + container.title)).read()
+            container.save()
+        except:
+            messages.warning(
+                self.request,
+                "Update did not work"
+            )
+        else:
+            messages.success(
+                self.request,
+                "Container id succesfully updated"
+            )
         return super().get(request, *args, **kwargs)

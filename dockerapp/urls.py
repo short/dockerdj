@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'container/$', views.ContainerView.as_view(), name='containers'),
     url(r'container/new$', views.CreateContainerView.as_view(),name='container_new'),
     url(r"container/(?P<pk>\d+)", views.ContainerDetail.as_view(),name="container_change"),
+    url(r"container/update/(?P<pk>\d+)",views.UpdateContainerId.as_view(),name="container_update"),
     url(r"container/delete/(?P<pk>\d+)",views.DeleteContainer.as_view(),name="container_delete"),
     url(r"container/stop/(?P<pk>\d+)",views.StopContainer.as_view(),name="container_stop"),
     url(r'dockerfile/$', views.DockerfileView.as_view(), name='dockerfiles'),

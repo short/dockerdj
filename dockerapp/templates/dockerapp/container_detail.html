@@ -2,12 +2,16 @@
 {% block content %}
   <h1>{{ container.title }}</h1>
   <p>Port: {{ container.port }}</p>
-  {% if user.is_authenticated %}
+  {% if user.is_authenticated and container.container_id|length > 0 %}
 		<a href="{% url 'dockerapp:container_delete' pk=container.pk %}" title="delete" class="btn btn-danger">
 			Delete
 		</a>
     <a href="{% url 'dockerapp:container_stop' pk=container.pk %}" title="stop" class="btn btn-warning">
       Stop Container
+    </a>
+  {% else %}
+    <a href="{% url 'dockerapp:container_update' pk=container.pk %}" title="delete" class="btn btn-danger">
+      update container_id
     </a>
 	{% endif %}
 {% endblock %}
