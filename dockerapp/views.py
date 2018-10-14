@@ -12,7 +12,6 @@ from braces.views import SelectRelatedMixin
 from . import models
 
 # Create your views here.
-
 class DockerfileView(generic.ListView):
     model = Dockerfile
 
@@ -132,7 +131,18 @@ class UpdateContainerId(LoginRequiredMixin, generic.RedirectView):
                 title = container_title
             ).get()
 
-            container.container_id = os.popen(str("docker inspect --format="+"{"+"{"+".Id"+"}"+"} " + container.title)).read()
+            container_id = os.popen(str("docker inspect --format="+"{"+"{"+".Id"+"}"+"} " + container.title)).read()
+            container_port_command = os.popen(str("docker port " + container_id)).read()
+
+            # get the ip address
+            number = 0
+            for word in container_port_command.split():
+                number += 1
+                if number == 3:
+                    container_port = word
+
+            container.container_id = container_id
+            container.container_port = container_port
             container.save()
         except:
             messages.warning(

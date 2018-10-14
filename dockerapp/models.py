@@ -18,7 +18,6 @@ class Dockerfile(models.Model):
         f.write(self.dockerfile_content)
         f.close()
         return reverse("dockerapp:dockerfiles")
-        # return reverse("",kwargs={'pk':self.pk})
 
     def __str__(self):
         return self.title
@@ -29,6 +28,8 @@ class Container(models.Model):
     port = models.CharField(max_length=20)
     container_id = models.CharField(max_length=250)
     container_stopped = models.CharField(max_length=1)
+    container_port = models.CharField(max_length=250)
+    container_public_port = models.CharField(max_length=20)
 
     def get_absolute_url(self):
         # file = open(self.dockerfile + ".yml", "r")

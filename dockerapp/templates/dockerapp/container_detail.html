@@ -3,10 +3,17 @@
   <h1>{{ container.title }}</h1>
   <p>Port: {{ container.port }}</p>
   {% if user.is_authenticated and container.container_id|length > 0 %}
+    {% if container.container_port %}
+      {% if '0.0.0.0' in container.container_port %}
+        <a href="http://localhost:{{ container.container_public_port }}" target="_blank" class="btn btn-primary">Application</a>
+      {% else %}
+        <a href="http://{{ container.container_port }}" target="_blank" class="btn btn-primary">Application</a>
+      {% endif %}
+    {% endif %}
 		<a href="{% url 'dockerapp:container_delete' pk=container.pk %}" title="delete" class="btn btn-danger">
 			Delete
 		</a>
-    {% if container.container_stopped == '' %}
+    {% if container.container_stopped == '' or container.container_stopped == '0' %}
       <a href="{% url 'dockerapp:container_stop' pk=container.pk %}" title="stop" class="btn btn-warning">
         Stop Container
       </a>

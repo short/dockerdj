@@ -16,7 +16,7 @@ class ContainerForm(forms.ModelForm):
 
     class Meta():
         model = Container
-        fields = ('dockerfile','title','port')
+        fields = ('dockerfile','title','port','container_public_port')
 
         widgets = {
             'title':forms.TextInput(attrs={'class':'textinputclass'}),
