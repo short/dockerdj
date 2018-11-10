@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% if containerbydockerfile_list|length > 0 %}
+      {% for container in containerbydockerfile_list %}
+          <div class="container">
+              <h1><a href="{% url 'dockerapp:container_dockerfile_change' pk=container.pk %}">{{ container.title }}</a></h1>
+          </div>
+      {% endfor %}
+    {% else %}
+      <h2>No containers</h2>
+    {% endif %}
+{% endblock %}

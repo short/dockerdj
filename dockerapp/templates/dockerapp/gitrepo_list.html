@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% if gitrepo_list|length > 0 %}
+      {% for gitrepo in gitrepo_list %}
+          <div class="container">
+              <h1><a href="{% url 'dockerapp:gitrepo_change' pk=gitrepo.pk %}">{{ gitrepo.name }}</a></h1>
+          </div>
+      {% endfor %}
+    {% else %}
+      <h2>No gitrepos</h2>
+    {% endif %}
+{% endblock %}

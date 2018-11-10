@@ -1,11 +1,10 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-<h1>New dockerfile</h1>
+<h1>New gitrepo</h1>
 <form method="post">
   {% csrf_token %}
   {{ form|crispy }}
   <button type="submit" class="btn btn-default">Save</button>
 </form>
-<h2>Git Repos</h2>
 {% endblock %}

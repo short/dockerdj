@@ -20,3 +20,7 @@ An application made with Django to make docker containers in a GUI.
 
 ## Create a superuser:
 1. python manage.py createsuperuser
+
+## Installed packages:
+1. pip install django-crispy-forms
+2. pip install django-extra-views

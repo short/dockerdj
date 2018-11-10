@@ -1,5 +1,5 @@
 from django import forms
-from dockerapp.models import Dockerfile, Container
+from dockerapp.models import Dockerfile, ContainerByDockerFile, GitRepo, ContainerByImage
 
 class DockerfileForm(forms.ModelForm):
 
@@ -12,11 +12,35 @@ class DockerfileForm(forms.ModelForm):
         }
 
 
-class ContainerForm(forms.ModelForm):
+class ContainerByDockerFileForm(forms.ModelForm):
+
+    # dockerfile = forms.ChoiceField(required=False)
 
     class Meta():
-        model = Container
+        model = ContainerByDockerFile
         fields = ('dockerfile','title','port','container_public_port')
+
+        widgets = {
+            'title':forms.TextInput(attrs={'class':'textinputclass'}),
+        }
+
+class GitRepoForm(forms.ModelForm):
+
+    class Meta():
+        model = GitRepo
+        fields = ('name','url','Description')
+
+        widgets = {
+            'title':forms.TextInput(attrs={'class':'textinputclass'}),
+        }
+
+class ContainerByImageForm(forms.ModelForm):
+
+    # dockerfile = forms.ChoiceField(required=False)
+
+    class Meta():
+        model = ContainerByImage
+        fields = ('name','port','container_public_port')
 
         widgets = {
             'title':forms.TextInput(attrs={'class':'textinputclass'}),

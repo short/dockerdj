@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>{{ containerbyimage.title }}</h1>
+  <p>Port: {{ containerbyimage.port }}</p>
+  {% if user.is_authenticated and containerbyimage.container_id|length > 0 %}
+    {% if containerbyimage.container_port and containerbyimage.container_stopped == '' %}
+      {% if '0.0.0.0' in containerbyimage.container_port %}
+        <a href="http://localhost:{{ containerbyimage.container_public_port }}" target="_blank" class="btn btn-primary">Application</a>
+      {% else %}
+        <a href="http://{{ containerbyimage.container_port }}" target="_blank" class="btn btn-primary">Application</a>
+      {% endif %}
+    {% endif %}
+		<a href="{% url 'dockerapp:container_image_delete' pk=containerbyimage.pk %}" title="delete" class="btn btn-danger">
+			Delete
+		</a>
+    {% if containerbyimage.container_stopped == '' or containerbyimage.container_stopped == '0' %}
+      <a href="{% url 'dockerapp:container_image_stop' pk=containerbyimage.pk %}" title="stop" class="btn btn-warning">
+        Stop Container
+      </a>
+    {% endif %}
+  {% else %}
+    <a href="{% url 'dockerapp:container_image_update' pk=containerbyimage.pk %}" title="delete" class="btn btn-danger">
+      update container_id
+    </a>
+	{% endif %}
+{% endblock %}

@@ -5,8 +5,9 @@
   <head>
     <meta charset="utf-8">
     <title>DockerDJ</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-    <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" charset="utf-8"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   </head>
@@ -26,11 +27,29 @@
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'dockerapp:dockerfile_new' %}">Add dockerfile</a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'dockerapp:containers' %}">Containers</a>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Containers
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="nav-link" href="{% url 'dockerapp:containers_dockerfile' %}">By dockerfile</a>
+                    <a class="nav-link" href="{% url 'dockerapp:containers_image' %}">By image</a>
+                  </div>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Add Container
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="nav-link" href="{% url 'dockerapp:container_dockerfile_new' %}">By dockerfile</a>
+                    <a class="nav-link" href="{% url 'dockerapp:container_image_new' %}">By image</a>
+                  </div>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="{% url 'dockerapp:container_new' %}">Add Container</a>
+                  <a class="nav-link" href="{% url 'dockerapp:gitrepos' %}">Gitrepos</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'dockerapp:gitrepo_new' %}">Add gitrepo</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'dockerapp:logout' %}">Logout</a>
@@ -39,8 +58,17 @@
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'dockerapp:dockerfiles' %}">Dockerfiles</a>
                 </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Containers
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="nav-link" href="{% url 'dockerapp:containers_dockerfile' %}">By dockerfile</a>
+                    <a class="nav-link" href="{% url 'dockerapp:containers_image' %}">By image</a>
+                  </div>
+                </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="{% url 'dockerapp:containers' %}">Containers</a>
+                  <a class="nav-link" href="{% url 'dockerapp:gitrepos' %}">Gitrepos</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'dockerapp:login' %}">Login</a>
