@@ -23,4 +23,3 @@ An application made with Django to make docker containers in a GUI.
 
 ## Installed packages:
 1. pip install django-crispy-forms
-2. pip install django-extra-views

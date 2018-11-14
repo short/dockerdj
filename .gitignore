@@ -1,5 +1,7 @@
 # ignore the following directories
-!migrations
+!dockerapp/migrations
+!media
+!node_modules
 
 # Compiled source #
 ###################

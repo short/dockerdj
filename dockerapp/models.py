@@ -1,22 +1,23 @@
 from django.db import models
 from django.utils import timezone
 from django.urls import reverse
-import os
+from django.conf import settings
+import os, os.path
 
 # Create your models here.
 class Dockerfile(models.Model):
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     image_name = models.CharField(max_length=200)
-    dockerfile_content = models.TextField()
-    dockerfile = models.FileField(upload_to='media/dockerfiles/',blank=True)
+    dockerfile = models.FileField(upload_to='dockerfiles/%Y/%m/%d/%H-%M-%S',blank=True)
+    dockerfile_path = models.CharField(max_length=500)
     created_date = models.DateTimeField(default=timezone.now)
 
     def get_absolute_url(self):
-        f = open(self.title + ".yml", "w+")
-        f.write("FROM " + self.image_name + "\n")
-        f.write(self.dockerfile_content)
-        f.close()
+        print(self.dockerfile.path.split('dockerdj', 1)[-1])
+        # self.dockerfile_path = self.dockerfile.path
+        self.dockerfile_path = self.dockerfile.path.split('dockerdj', 1)[-1]
+        self.save()
         return reverse("dockerapp:dockerfiles")
 
     def __str__(self):
@@ -48,12 +49,19 @@ class ContainerByDockerFile(models.Model):
     container_public_port = models.CharField(max_length=20)
 
     def get_absolute_url(self):
-        # file = open(self.dockerfile + ".yml", "r")
+        dockerfilepath = self.dockerfile.dockerfile_path.replace("\\", "/")
+        basedirectory = settings.BASE_DIR.replace("\\", "/")
+        # fulldirectory = str(basedirectory + dockerfilepath[:-11])
+        fulldirectory = str(basedirectory + dockerfilepath)
+        print(fulldirectory)
 
         # Start the container
         os.system("docker login")
-        os.system("docker build -t " + self.title + " " + self.title + ".yml")
+        os.system("docker build -t " + self.title + " -f " + fulldirectory + " .")
         os.system("docker run --name " + self.title + " -d -p " + self.port + " " + self.title)
+
+        # print(settings.BASE_DIR.replace("\\", "/"))
+        # print(dockerfilepath)
         return reverse("dockerapp:containers_dockerfile")
 
     def __str__(self):

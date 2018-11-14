@@ -5,7 +5,7 @@ class DockerfileForm(forms.ModelForm):
 
     class Meta():
         model = Dockerfile
-        fields = ('author','title','image_name','dockerfile_content')
+        fields = ('author','title','image_name','dockerfile')
 
         widgets = {
             'title':forms.TextInput(attrs={'class':'textinputclass'}),

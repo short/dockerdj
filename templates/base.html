@@ -21,11 +21,14 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
               {% if user.is_authenticated %}
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'dockerapp:dockerfiles' %}">Dockerfiles</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'dockerapp:dockerfile_new' %}">Add dockerfile</a>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    DockerFiles
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="nav-link" href="{% url 'dockerapp:dockerfile_new' %}">Add dockerfile</a>
+                    <a class="nav-link" href="{% url 'dockerapp:dockerfiles' %}">Dockerfiles list</a>
+                  </div>
                 </li>
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -45,11 +48,14 @@
                     <a class="nav-link" href="{% url 'dockerapp:container_image_new' %}">By image</a>
                   </div>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'dockerapp:gitrepos' %}">Gitrepos</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'dockerapp:gitrepo_new' %}">Add gitrepo</a>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    GitRepos
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="nav-link" href="{% url 'dockerapp:gitrepo_new' %}">Add gitrepo</a>
+                    <a class="nav-link" href="{% url 'dockerapp:gitrepos' %}">Gitrepos list</a>
+                  </div>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'dockerapp:logout' %}">Logout</a>
