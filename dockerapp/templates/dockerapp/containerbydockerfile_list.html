@@ -1,13 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
+  <div class="box">
     {% if containerbydockerfile_list|length > 0 %}
-      {% for container in containerbydockerfile_list %}
-          <div class="container">
-              <h1><a href="{% url 'dockerapp:container_dockerfile_change' pk=container.pk %}">{{ container.title }}</a></h1>
-          </div>
-      {% endfor %}
+      <h1>Container by dockerfile list</h1>
+      <ol>
+        {% for container in containerbydockerfile_list %}
+          <li><a class="dj-button" href="{% url 'dockerapp:container_dockerfile_change' pk=container.pk %}">{{ container.title }}</a></li>
+        {% endfor %}
+      </ol>
     {% else %}
-      <h2>No containers</h2>
+      <h1>No containers</h1>
     {% endif %}
+  </div>
 {% endblock %}

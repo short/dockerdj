@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
+<div class="box">
   <h1>{{ gitrepo.name }}</h1>
   <p>{{ gitrepo.url }}</p>
   <p>{{ gitrepo.Description }}</p>
@@ -8,4 +9,5 @@
 			Delete
 		</a>
 	{% endif %}
+</div>
 {% endblock %}

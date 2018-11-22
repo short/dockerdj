@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
-  <h1>{{ containerbyimage.title }}</h1>
+<div class="box">
+  <h1>{{ containerbyimage.name }}</h1>
   <p>Port: {{ containerbyimage.port }}</p>
   {% if user.is_authenticated and containerbyimage.container_id|length > 0 %}
     {% if containerbyimage.container_port and containerbyimage.container_stopped == '' %}
@@ -23,4 +24,5 @@
       update container_id
     </a>
 	{% endif %}
+</div>
 {% endblock %}

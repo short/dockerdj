@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
+<div class="box">
   <h1>{{ containerbydockerfile.title }}</h1>
   <p>Port: {{ containerbydockerfile.port }}</p>
   {% if user.is_authenticated and containerbydockerfile.container_id|length > 0 %}
@@ -18,7 +19,7 @@
         Stop Container
       </a>
     {% endif %}
-    {% if containerbydockerfile.gitrepo and containerbydockerfile.gitrepo.last_commit_id|length > 0 %}
+    {% if containerbydockerfile.gitrepo %}
       <a href="{% url 'dockerapp:container_bydockerfile_update_container' pk=containerbydockerfile.pk %}" title="update-container" class="btn btn-primary">
         Check for update
       </a>
@@ -28,4 +29,5 @@
       update container_id
     </a>
 	{% endif %}
+</div>
 {% endblock %}

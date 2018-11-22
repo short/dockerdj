@@ -1,13 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
+  <div class="box">
     {% if gitrepo_list|length > 0 %}
-      {% for gitrepo in gitrepo_list %}
-          <div class="container">
-              <h1><a href="{% url 'dockerapp:gitrepo_change' pk=gitrepo.pk %}">{{ gitrepo.name }}</a></h1>
-          </div>
-      {% endfor %}
+      <h1>GitRepo list</h1>
+      <ol>
+        {% for gitrepo in gitrepo_list %}
+          <li><a class="dj-button" href="{% url 'dockerapp:gitrepo_change' pk=gitrepo.pk %}">{{ gitrepo.name }}</a></li>
+        {% endfor %}
+      </ol>
     {% else %}
-      <h2>No gitrepos</h2>
+      <h2>No GitRepos</h2>
     {% endif %}
+  </div>
 {% endblock %}
