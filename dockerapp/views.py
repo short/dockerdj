@@ -6,6 +6,7 @@ from dockerapp.models import Dockerfile, ContainerByDockerFile, GitRepo, Contain
 from dockerapp.forms import DockerfileForm, ContainerByDockerFileForm, GitRepoForm, ContainerByImageForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy, reverse
+from django.conf import settings
 import os
 
 from braces.views import SelectRelatedMixin
@@ -160,6 +161,72 @@ class UpdateContainerByDockerFileId(LoginRequiredMixin, generic.RedirectView):
                 self.request,
                 "Container id succesfully updated"
             )
+        return super().get(request, *args, **kwargs)
+
+class UpdateContainerByDockerFileContainer(LoginRequiredMixin, generic.RedirectView):
+    model = models.ContainerByDockerFile
+
+    def get_redirect_url(self, *args, **kwargs):
+        return reverse_lazy("dockerapp:containers_dockerfile")
+
+    def get(self, request, *args, **kwargs):
+        container = get_object_or_404(ContainerByDockerFile)
+
+        container_title = container.title
+        container_containerid = container.container_id
+
+        # Check for update with gitrepo id and update container if id changed
+        commit_id = os.popen(str("git ls-remote " + container.gitrepo.url + " HEAD")).read()
+        print(commit_id)
+
+        if commit_id != container.gitrepo.last_commit_id:
+            print("Update")
+
+            try:
+                container = models.ContainerByDockerFile.objects.filter(
+                    title = container_title
+                ).get()
+
+                os.system("docker container stop " + str(container.container_id))
+                os.system("docker container rm " + str(container.title))
+
+                gitrepo_name = container.gitrepo.name
+
+                gitrepo = models.GitRepo.objects.filter(
+                    name = gitrepo_name
+                ).get()
+
+                gitrepo.last_commit_id = commit_id
+                gitrepo.save()
+
+                new_container = ContainerByDockerFile(dockerfile=container.dockerfile, title=container.title, port=container.port, container_port=container.container_port, container_public_port=container.container_public_port, gitrepo=container.gitrepo)
+                new_container.save()
+                models.ContainerByDockerFile.objects.filter(
+                    container_id = container_containerid
+                ).delete()
+
+                dockerfilepath = new_container.dockerfile.dockerfile_path.replace("\\", "/")
+                basedirectory = settings.BASE_DIR.replace("\\", "/")
+                fulldirectory = str(basedirectory + dockerfilepath)
+                print(fulldirectory)
+
+                # Start the container
+                os.system("docker login")
+                os.system("docker build --no-cache -t " + new_container.title + " -f " + fulldirectory + " .")
+                os.system("docker run --name " + new_container.title + " -d -p " + new_container.port + " " + new_container.dockerfile.title)
+            except:
+                messages.warning(
+                    self.request,
+                    "Update did not work"
+                )
+            else:
+                messages.success(
+                    self.request,
+                    "Container succesfully updated"
+                )
+        else:
+            print("Container up to date")
+
         return super().get(request, *args, **kwargs)
 
 class GitRepoView(generic.ListView):

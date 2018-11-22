@@ -13,6 +13,7 @@ urlpatterns = [
     url(r"container/bydockerfile/update/(?P<pk>\d+)",views.UpdateContainerByDockerFileId.as_view(),name="container_bydockerfile_update"),
     url(r"container/bydockerfile/delete/(?P<pk>\d+)",views.DeleteContainerByDockerFile.as_view(),name="container_bydockerfile_delete"),
     url(r"container/bydockerfile/stop/(?P<pk>\d+)",views.StopContainerByDockerFile.as_view(),name="container_bydockerfile_stop"),
+    url(r"container/bydockerfile/updatecontainer/(?P<pk>\d+)",views.UpdateContainerByDockerFileContainer.as_view(),name="container_bydockerfile_update_container"),
     url(r'dockerfile/$',views.DockerfileView.as_view(),name='dockerfiles'),
     url(r'dockerfile/new$',views.CreateDockerfileView.as_view(),name='dockerfile_new'),
     url(r"dockerfile/(?P<pk>\d+)",views.DockerfileDetail.as_view(),name="dockerfile_change"),

@@ -18,6 +18,11 @@
         Stop Container
       </a>
     {% endif %}
+    {% if containerbydockerfile.gitrepo and containerbydockerfile.gitrepo.last_commit_id|length > 0 %}
+      <a href="{% url 'dockerapp:container_bydockerfile_update_container' pk=containerbydockerfile.pk %}" title="update-container" class="btn btn-primary">
+        Check for update
+      </a>
+    {% endif %}
   {% else %}
     <a href="{% url 'dockerapp:container_bydockerfile_update' pk=containerbydockerfile.pk %}" title="delete" class="btn btn-danger">
       update container_id
