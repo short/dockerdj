@@ -14,6 +14,10 @@ nav {
   background-color: #384d54;
 }
 
+.navbar-toggler {
+  border: 1px solid #000;
+}
+
 .jumbotron {
   background-color: #384d54;
   color: #FFF;
@@ -92,9 +96,11 @@ form label {
 }
 
 #bars {
-    height: 30px;
+    height: 80%;
     width: 100%;
     z-index: -100;
+    position: fixed;
+    bottom: 0;
 }
 
 .bar {
@@ -102,14 +108,14 @@ form label {
     bottom: 1px;
     height: 100%;
     position: absolute;
-    width: 8%;
+    width: 10%;
     animation: sound 0ms -2500ms linear infinite alternate;
     z-index: -100;
 }
 
 @keyframes sound {
     0% {
-       opacity: .35;
+       opacity: .55;
         height: 15%;
     }
     100% {
@@ -118,13 +124,13 @@ form label {
     }
 }
 
-.bar:nth-child(1)  { left: 1%; animation-duration: 674ms; }
-.bar:nth-child(2)  { left: 11%; animation-duration: 633ms; }
-.bar:nth-child(3)  { left: 21%; animation-duration: 619ms; }
-.bar:nth-child(4)  { left: 31%; animation-duration: 658ms; }
-.bar:nth-child(5)  { left: 41%; animation-duration: 610ms; }
-.bar:nth-child(6)  { left: 51%; animation-duration: 627ms; }
-.bar:nth-child(7)  { left: 61%; animation-duration: 641ms; }
-.bar:nth-child(8)  { left: 71%; animation-duration: 647ms; }
-.bar:nth-child(9)  { left: 81%; animation-duration: 600ms; }
-.bar:nth-child(10) { left: 91%; animation-duration: 642ms; }
+.bar:nth-child(1)  { left: 0%; animation-duration: 674ms; }
+.bar:nth-child(2)  { left: 10%; animation-duration: 633ms; }
+.bar:nth-child(3)  { left: 20%; animation-duration: 619ms; }
+.bar:nth-child(4)  { left: 30%; animation-duration: 658ms; }
+.bar:nth-child(5)  { left: 40%; animation-duration: 610ms; }
+.bar:nth-child(6)  { left: 50%; animation-duration: 627ms; }
+.bar:nth-child(7)  { left: 60%; animation-duration: 641ms; }
+.bar:nth-child(8)  { left: 70%; animation-duration: 647ms; }
+.bar:nth-child(9)  { left: 80%; animation-duration: 600ms; }
+.bar:nth-child(10) { left: 90%; animation-duration: 642ms; }
