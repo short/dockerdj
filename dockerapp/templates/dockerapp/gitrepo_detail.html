@@ -2,8 +2,8 @@
 {% block content %}
 <div class="box">
   <h1>{{ gitrepo.name }}</h1>
-  <p>{{ gitrepo.url }}</p>
-  <p>{{ gitrepo.Description }}</p>
+  <p>Repo URL: {{ gitrepo.url }}</p>
+  <p>Description: {{ gitrepo.Description }}</p>
   {% if user.is_authenticated %}
 		<a href="{% url 'dockerapp:gitrepo_delete' pk=gitrepo.pk %}" title="delete" class="btn btn-danger">
 			Delete
